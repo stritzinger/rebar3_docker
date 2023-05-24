@@ -70,7 +70,7 @@ format_error(Reason) ->
 
 template_parameters(RState, Config) ->
     Config#{
-        profile => hd(rebar_state:current_profiles(RState)),
+        profile => hd(lists:reverse(rebar_state:current_profiles(RState))),
         env => [#{name => N, value => escape_string(V)}
                 || {N, V} <- maps:get(env, Config)],
         git_url_rewrites => [#{from => F, to => T}
