@@ -16,7 +16,7 @@ Use
 Add the plugin to your rebar config:
 
     {plugins, [
-        {rebar3_docker, {git, "https://github.com/stritzinger/rebar3_docker.git", {tag, "0.1.0"}}}
+        {rebar3_docker, {git, "https://github.com/stritzinger/rebar3_docker.git", {branch, "main"}}}
     ]}.
 
 Add docker the configuration as needed to your rebar config:
@@ -26,9 +26,14 @@ Add docker the configuration as needed to your rebar config:
         % If not specified, uses "locale/release_name".
         {tag, "local/somename"},
         % The version of the erlang docker image.
-        % If not specified, uses "25.1.2.0"
-        {erlang_version, "25.1.2.0"},
-        % The name of the applicattion release.
+        % If not specified, uses "25.3.2.2"
+        {erlang_version, "25.3.2.2"},
+        % If you need to further customize the building environment,
+        % this option overrides the official erlang image with anything you want.
+        % in this case the erlang_version option is ignored 
+        % Must still be an alpine based image and contain OTP + Rebar3!
+        % {builder_image, "your-repo/your-image:tag"},
+        % The name of the application release.
         % If not specified use the first release name found in the relx config.
         {appname, "appname"},
         % The extra packages to install in the building docker layer.
