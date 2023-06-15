@@ -3,8 +3,7 @@
 #--- Builder -------------------------------------------------------------------
 
 ARG profile={{profile}}
-ARG erlang_version={{erlang_version}}
-FROM erlang:$erlang_version-alpine as builder
+FROM {{builder_image}} as builder
 
 WORKDIR /app/src
 ENV REBAR_BASE_DIR /app/_build

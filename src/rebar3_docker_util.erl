@@ -10,10 +10,11 @@
 
 %%% MACROS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
--define(DEFAULT_ERLANG_VERSION, <<"25.1.2.0">>).
+-define(DEFAULT_ERLANG_VERSION, <<"25.3.2.2">>).
 -define(CONFIG_KEYS, [
         {tag, binary},
         {erlang_version, binary},
+        {builder_image, binary},
         {appname, binary},
         {build_packages, [list, binary]},
         {git_url_rewrites, [list, [tuple, [binary, binary]]]},
@@ -26,7 +27,8 @@
 %%% API FUNCTIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 config(RState) ->
-    maps:merge(default_config(RState), docker_config(RState)).
+    UserCfg = maps:merge(default_config(RState), docker_config(RState)),
+    define_builder_image(UserCfg).
 
 container_dir(RState) ->
     filename:join([rebar_state:dir(RState),
@@ -35,6 +37,10 @@ container_dir(RState) ->
                    "container"]).
 
 %%% INTERNAL FUNCTIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+define_builder_image(#{builder_image := _} = Cfg) -> Cfg;
+define_builder_image(#{erlang_version := ErlV} = Cfg) ->
+    Cfg#{builder_image => "erlang:" ++ ErlV ++ "-alpine" }.
 
 release_config(RState) ->
     Config =  rebar_state:get(RState, relx, []),
