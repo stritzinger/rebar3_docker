@@ -40,7 +40,7 @@ container_dir(RState) ->
 
 define_builder_image(#{builder_image := _} = Cfg) -> Cfg;
 define_builder_image(#{erlang_version := ErlV} = Cfg) ->
-    Cfg#{builder_image => "erlang:" ++ ErlV ++ "-alpine" }.
+    Cfg#{builder_image => iolist_to_binary(["erlang:", ErlV ,"-alpine"])}.
 
 release_config(RState) ->
     Config =  rebar_state:get(RState, relx, []),
