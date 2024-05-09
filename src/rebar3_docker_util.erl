@@ -20,7 +20,8 @@
         {git_url_rewrites, [list, [tuple, [binary, binary]]]},
         {runtime_packages, [list, binary]},
         {ports, [list, [tuple, [integer, {tcp, udp}]]]},
-        {env, [list, [tuple, [binary, any]]]}
+        {env, [list, [tuple, [binary, any]]]},
+        {platform, [list, binary]}
 ]).
 
 
@@ -101,5 +102,6 @@ default_config(RState) ->
         git_url_rewrites => [],
         ports => [],
         build_packages => [],
-        runtime_packages => []
+        runtime_packages => [],
+        platform => []
     }.
