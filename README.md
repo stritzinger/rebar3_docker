@@ -57,7 +57,7 @@ Add docker the configuration as needed to your rebar config:
         {env, [
             {'COOKIE', "dummy"},
             {'LOGGER_LEVEL', debug}
-        ]}
+        ]},
         % The target platform for the build output
         % You can specify multiple platform if your docker configuration allows it
         % If not specified, then the flag isn't used when building the docker image
