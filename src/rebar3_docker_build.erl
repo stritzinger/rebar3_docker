@@ -49,12 +49,16 @@ do(RState) ->
             file:write_file(DataFilename, Data),
             Args = ["build", ".", "-f", DataFilename, "--progress=plain",
                     "--tag", binary_to_list(maps:get(tag, Config))],
-            Args2 = case os:getenv("SSH_AUTH_SOCK") of
-                false -> Args;
-                Value -> Args ++ ["--ssh=default=" ++ Value]
+            Args2 = case maps:get(platform, Config) of
+                        [] -> Args;
+                        Platforms -> Args ++ format_platform_option(Platforms)
+                    end,
+            Args3 = case os:getenv("SSH_AUTH_SOCK") of
+                false -> Args2;
+                Value -> Args2 ++ ["--ssh=default=" ++ Value]
             end,
             CmdOpts = [use_stdout, abort_on_error, {cd, rebar_state:dir(RState2)}],
-            Command = lists:flatten(lists:join(" ", ["docker" | Args2])),
+            Command = lists:flatten(lists:join(" ", ["docker" | Args3])),
             rebar_utils:sh(Command, CmdOpts),
             {ok, RState2};
         Error ->
@@ -92,3 +96,8 @@ escape_string(Str) when is_list(Str) ->
 escape_string(Other) ->
     Other.
 
+format_platform_option(Platforms) ->
+    ["--platform",
+     lists:join(",", lists:map(fun(Platform) ->
+                                       binary_to_list(Platform)
+                               end, Platforms))].
