@@ -16,7 +16,7 @@ Use
 Add the plugin to your rebar config:
 
     {plugins, [
-        {rebar3_docker, {git, "https://github.com/stritzinger/rebar3_docker.git", {branch, "main"}}}
+        rebar3_docker
     ]}.
 
 Add docker the configuration as needed to your rebar config:
