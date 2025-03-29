@@ -38,8 +38,7 @@ do(RState) ->
         {ok, RState2} ->
             Config = rebar3_docker_util:config(RState2),
             Params = template_parameters(RState2, Config),
-            TemplateFile = filename:join([code:priv_dir(rebar3_docker),
-                                          "templates", "Dockerfile"]),
+            TemplateFile = template_file(RState2, Config),
             Template = bbmustache:parse_file(TemplateFile),
             Data = bbmustache:compile(Template, Params,
                 [{key_type, atom}, {escape_fun, fun(X) -> X end}]),
@@ -86,6 +85,15 @@ template_parameters(RState, Config) ->
         runtime_packages => [#{name => N}
                             || N <- maps:get(runtime_packages, Config)]
     }.
+template_file(RState, Config) ->
+    case maps:get(template, Config, undefined) of
+        undefined ->
+            rebar_api:info("Using default template to generate the Dockerfile", []),
+            filename:join([code:priv_dir(rebar3_docker), "templates", "Dockerfile"]);
+        Bin ->
+            rebar_api:info("Using custom template from docker config to generate the Dockerfile", []),
+            filename:join([rebar_state:dir(RState), Bin])
+    end.
 
 escape_string(Str) when is_binary(Str) ->
     iolist_to_binary(io_lib:format("\"~s\"",
