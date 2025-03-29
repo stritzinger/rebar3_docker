@@ -16,6 +16,7 @@
         {erlang_version, binary},
         {builder_image, binary},
         {appname, binary},
+        {template, binary},
         {build_packages, [list, binary]},
         {git_url_rewrites, [list, [tuple, [binary, binary]]]},
         {runtime_packages, [list, binary]},
