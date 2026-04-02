@@ -10,7 +10,7 @@
 
 %%% MACROS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
--define(DEFAULT_ERLANG_VERSION, <<"25.3.2.2">>).
+-define(DEFAULT_ERLANG_VERSION, <<"28.4.0.0">>).
 -define(CONFIG_KEYS, [
         {tag, binary},
         {erlang_version, binary},
