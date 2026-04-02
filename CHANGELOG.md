@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+* Default OTP builder version updated from `25.3.2.2` to `28.4.0.0`.
+* README now documents the intended `include_erts = true` release model and the OTP upgrade path.
+
 ## [0.2.0] - 2024-05-09
 
 ### Added
